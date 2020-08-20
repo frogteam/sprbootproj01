@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,6 +29,10 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    // User : OrderDetail <=> 1 : N
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")  // mappedBy = "user" <-- OrderDetail 의 멤버변수 user 와 동일한 이름이어야 한다.
+    private List<OrderDetail> orderDetailList;
 }
 
 
