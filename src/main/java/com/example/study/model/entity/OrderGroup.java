@@ -1,16 +1,27 @@
 package com.example.study.model.entity;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
+@ToString(exclude = {"user", "orderDetailList"})
+@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Accessors(chain = true)
+
 public class OrderGroup {
 
     @Id
@@ -35,13 +46,24 @@ public class OrderGroup {
 
     private LocalDateTime arrivalDate;
 
+    @CreatedDate
     private LocalDateTime createdAt;
-
+    @CreatedBy
     private String createdBy;
-
+    @LastModifiedDate
     private LocalDateTime updatedAt;
-
+    @LastModifiedBy
     private String updatedBy;
+
+
+    // OrderGroup : User => N : 1
+    @ManyToOne
+    private User user;   // 변수명은 User 의 mappedBy 값에 일치해야 한다
+
+    // OrderGroup : OrderDetail => 1:N
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orderGroup")
+    private List<OrderDetail> orderDetailList;
+
 
 }
 

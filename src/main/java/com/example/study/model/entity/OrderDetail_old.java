@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@Entity  // order_detail
+//@Entity  // order_detail
 @ToString(exclude = {"user", "item"})
 public class OrderDetail_old {
 

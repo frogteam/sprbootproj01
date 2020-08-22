@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity
+//@Entity
 public class Item_old {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
